@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>triplebrush.github.io</title>
+    <style>
+        .web-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1em;
+            justify-content: center;
+            margin-top: 3em;
+        }
+        .web-btn-img {
+            border: none;
+            background: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.2s;
+            border-radius: 12px;
+            outline: none;
+        }
+        .web-btn-img:hover,
+        .web-btn-img:focus {
+            transform: translateY(-4px) scale(1.06);
+            filter: drop-shadow(0 6px 24px rgb(0, 110, 255));
+        }
+        .web-btn-img img {
+            display: block;
+            width: 192px;
+            height: 192px;
+            object-fit: contain;
+            border-radius: 12px;
+            /* Only apply shadow to non-transparent pixels */
+            filter: drop-shadow(0 2px 8px rgba(42,122,226,0.18));
+            background: none;
+        }
+        .top-left-btn {
+            position: absolute;
+            top: 1em;
+            left: 1em;
+            z-index: 10;
+        }
+        .top-right-btn {
+            position: absolute;
+            top: 1em;
+            right: 1em;
+            z-index: 10;
+        }
+
+        /* Bubbles animation styles */
+        .bubbles {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: bubbleUp 8s linear infinite;
+            background: radial-gradient(circle at 30% 30%, #aeeaff 60%, #2a7ae2 100%);
+        }
+        .bubble.right {
+            left: auto;
+            right: 0;
+            animation-name: bubbleUpRight;
+        }
+        @keyframes bubbleUp {
+            0% {
+                transform: translateX(0) scale(1);
+                opacity: 0.5;
+            }
+            80% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateX(80px) translateY(-110vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+        @keyframes bubbleUpRight {
+            0% {
+                transform: translateX(0) scale(1);
+                opacity: 0.5;
+            }
+            80% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateX(-80px) translateY(-110vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bubbles" id="bubbles"></div>
+    <a class="web-btn-img top-left-btn" href="public/web/Asset%201.png" target="_blank">
+        <img src="public/web/Asset%201.png" alt="Asset 1">
+    </a>
+    <a class="web-btn-img top-right-btn" href="public/web/Asset%205.png" target="_blank">
+        <img src="public/web/Asset%205.png" alt="Asset 5">
+    </a>
+    <div class="web-nav">
+        <a class="web-btn-img" href="public/web/Asset%202.png" target="_blank">
+            <img src="public/web/Asset%202.png" alt="Asset 2">
+        </a>
+        <a class="web-btn-img" href="public/web/Asset%203.png" target="_blank">
+            <img src="public/web/Asset%203.png" alt="Asset 3">
+        </a>
+        <a class="web-btn-img" href="public/web/Asset%204.png" target="_blank">
+            <img src="public/web/Asset%204.png" alt="Asset 4">
+        </a>
+    </div>
+    <script>
+        // Generate animated bubbles from left and right
+        const bubbles = document.getElementById('bubbles');
+        function randomBetween(a, b) {
+            return a + Math.random() * (b - a);
+        }
+        function createBubble(side = 'left') {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble' + (side === 'right' ? ' right' : '');
+            const size = randomBetween(24, 64);
+            bubble.style.width = bubble.style.height = size + 'px';
+            bubble.style.opacity = randomBetween(0.25, 0.6);
+            bubble.style[side] = randomBetween(0, 60) + 'px';
+            bubble.style.animationDuration = randomBetween(6, 12) + 's';
+            bubble.style.animationDelay = randomBetween(0, 4) + 's';
+            bubbles.appendChild(bubble);
+            setTimeout(() => bubble.remove(), 13000);
+        }
+        setInterval(() => createBubble('left'), 900);
+        setInterval(() => createBubble('right'), 1100);
+        // Initial bubbles
+        for(let i=0;i<5;i++) { createBubble('left'); createBubble('right'); }
+    </script>
+</body>
+</html>
