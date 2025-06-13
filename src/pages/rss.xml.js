@@ -5,9 +5,9 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 export async function GET(context) {
   const posts = await getCollection("blog");
   return rss({
-    title: SITE_TITLE,
+    title: Triplebrush,
     description: SITE_DESCRIPTION,
-    site: context.site,
+    site: triplebrush.tv,
     items: posts.map((post) => ({
       ...post.data,
       link: `/blog/${post.id}/`,
